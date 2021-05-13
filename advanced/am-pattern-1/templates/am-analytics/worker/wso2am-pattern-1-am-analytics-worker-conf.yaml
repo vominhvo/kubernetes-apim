@@ -114,6 +114,7 @@ data:
       # Configuration used for the databridge communication
     databridge.config:
         # No of worker threads to consume events
+        # No of worker threads to consume events
         # THIS IS A MANDATORY FIELD
       workerThreads: 10
         # Maximum amount of messages that can be queued internally in MB
@@ -155,8 +156,10 @@ data:
           properties:
             tcpPort: '9611'
             sslPort: '9711'
-            tcpReceiverThreadPoolSize: '100'
-            sslReceiverThreadPoolSize: '100'
+            # tcpReceiverThreadPoolSize: '100'
+            # sslReceiverThreadPoolSize: '100'
+            tcpReceiverThreadPoolSize: '20'
+            sslReceiverThreadPoolSize: '20'
             hostName: 0.0.0.0
 
       # Configuration of the Data Agents - to publish events through databridge
@@ -378,11 +381,12 @@ data:
           definition:
             type: RDBMS
             configuration:
-              jdbcUrl: 'jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_PERMISSIONS_DB?useSSL=false'
-              username: wso2carbon
-              password: wso2carbon
-              driverClassName: com.mysql.cj.jdbc.Driver
+              jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_permissions_db{{ .Values.db.optional }}"
+              username: {{ .Values.db.username }}
+              password: {{ .Values.db.password }}
+              driverClassName: {{ .Values.db.driver }}
               maxPoolSize: 10
+              maxActive: 10
               idleTimeout: 60000
               connectionTestQuery: SELECT 1
               validationTimeout: 30000
@@ -411,11 +415,12 @@ data:
           definition:
             type: RDBMS
             configuration:
-              jdbcUrl: 'jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_STATS_DB?useSSL=false'
-              username: wso2carbon
-              password: wso2carbon
-              driverClassName: com.mysql.cj.jdbc.Driver
+              jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_stats_db{{ .Values.db.optional }}"
+              username: {{ .Values.db.username }}
+              password: {{ .Values.db.password }}
+              driverClassName: {{ .Values.db.driver }}
               maxPoolSize: 50
+              maxActive: 10
               idleTimeout: 60000
               connectionTestQuery: SELECT 1
               validationTimeout: 30000
@@ -430,13 +435,14 @@ data:
             type: RDBMS
             configuration:
               connectionTestQuery: "SELECT 1"
-              driverClassName: com.mysql.cj.jdbc.Driver
               idleTimeout: 60000
               isAutoCommit: false
-              jdbcUrl: "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2_CLUSTER_DB?useSSL=false"
               maxPoolSize: 50
-              password: wso2carbon
-              username: wso2carbon
+              jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2_cluster_db{{ .Values.db.optional }}"
+              username: {{ .Values.db.username }}
+              password: {{ .Values.db.password }}
+              driverClassName: {{ .Values.db.driver }}
+              maxActive: 10
               validationTimeout: 30000
 
         -
@@ -448,13 +454,14 @@ data:
             type: RDBMS
             configuration:
               connectionTestQuery: "SELECT 1"
-              driverClassName: com.mysql.cj.jdbc.Driver
               idleTimeout: 60000
               isAutoCommit: false
-              jdbcUrl: "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2_PERSISTENCE_DB?useSSL=false"
+              jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2_persistence_db{{ .Values.db.optional }}"
+              username: {{ .Values.db.username }}
+              password: {{ .Values.db.password }}
+              driverClassName: {{ .Values.db.driver }}
+              maxActive: 10
               maxPoolSize: 50
-              password: wso2carbon
-              username: wso2carbon
               validationTimeout: 30000
 
     siddhi:

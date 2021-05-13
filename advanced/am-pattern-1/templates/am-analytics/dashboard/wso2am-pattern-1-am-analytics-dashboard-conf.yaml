@@ -102,8 +102,10 @@ data:
           properties:
             tcpPort: '9611'
             sslPort: '9711'
-            tcpReceiverThreadPoolSize: '100'
-            sslReceiverThreadPoolSize: '100'
+            # tcpReceiverThreadPoolSize: '100'
+            # sslReceiverThreadPoolSize: '100'
+            tcpReceiverThreadPoolSize: '20'
+            sslReceiverThreadPoolSize: '20'
             hostName: 0.0.0.0
 
       # Configuration of the Data Agents - to publish events through databridge
@@ -250,11 +252,12 @@ data:
         definition:
           type: RDBMS
           configuration:
-            jdbcUrl: 'jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_DASHBOARD_DB?useSSL=false'
-            username: wso2carbon
-            password: wso2carbon
-            driverClassName: com.mysql.cj.jdbc.Driver
+            jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_dashboard_db{{ .Values.db.optional }}"
+            driverClassName: {{ .Values.db.driver }}
+            username: {{ .Values.db.username }}
+            password: {{ .Values.db.password }}
             maxPoolSize: 20
+            maxActive: 10
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -267,11 +270,12 @@ data:
         definition:
           type: RDBMS
           configuration:
-            jdbcUrl: 'jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_BUSINESS_RULES_DB?useSSL=false'
-            username: wso2carbon
-            password: wso2carbon
-            driverClassName: com.mysql.cj.jdbc.Driver
+            jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_business_rules_db{{ .Values.db.optional }}"
+            driverClassName: {{ .Values.db.driver }}
+            username: {{ .Values.db.username }}
+            password: {{ .Values.db.password }}
             maxPoolSize: 20
+            maxActive: 10
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -303,11 +307,12 @@ data:
         definition:
           type: RDBMS
           configuration:
-            jdbcUrl: 'jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_PERMISSIONS_DB?useSSL=false'
-            username: wso2carbon
-            password: wso2carbon
-            driverClassName: com.mysql.cj.jdbc.Driver
+            jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_permissions_db{{ .Values.db.optional }}"
+            driverClassName: {{ .Values.db.driver }}
+            username: {{ .Values.db.username }}
+            password: {{ .Values.db.password }}
             maxPoolSize: 10
+            maxActive: 10
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -321,11 +326,12 @@ data:
         definition:
           type: RDBMS
           configuration:
-            jdbcUrl: 'jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_STATS_DB?useSSL=false'
-            username: wso2carbon
-            password: wso2carbon
-            driverClassName: com.mysql.cj.jdbc.Driver
+            jdbcUrl: 'jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_stats_db{{ .Values.db.optional }}'
+            driverClassName: {{ .Values.db.driver }}
+            username: {{ .Values.db.username }}
+            password: {{ .Values.db.password }}
             maxPoolSize: 50
+            maxActive: 10
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -339,11 +345,12 @@ data:
         definition:
           type: RDBMS
           configuration:
-            jdbcUrl: "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_DB?useSSL=false"
-            username: wso2carbon
-            password: wso2carbon
-            driverClassName: com.mysql.cj.jdbc.Driver
+            jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2am_db{{ .Values.db.optional }}"
+            username: {{ .Values.db.username }}
+            password: {{ .Values.db.password }}
+            driverClassName: {{ .Values.db.driver }}
             maxPoolSize: 10
+            maxActive: 10
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000

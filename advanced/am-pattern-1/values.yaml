@@ -21,6 +21,8 @@ wso2:
     password: ""
 
   deployment:
+    secondInstance:
+      enabled: false
     dependencies:
       # The configuration should be set to be 'true' if a MySQL database should be spawned as a pod within the cluster
       mysql: true
@@ -56,6 +58,7 @@ wso2:
           solrIndexedData: 50M
 
     am:
+      adminPassword: "admin"
       # Container image configurations
       # If a custom image must be used, uncomment 'dockerRegistry' and provide its value
       # dockerRegistry: ""
@@ -256,3 +259,13 @@ mysql-am:
   mysql:
     persistence:
       storageClass: *storage_class
+
+db:
+  type: ""
+  prefixName: ""
+  host: ""
+  port: 5432
+  optional: ""
+  username: ""
+  password: ""
+  driver: ""

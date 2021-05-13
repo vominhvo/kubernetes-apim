@@ -18,7 +18,7 @@ metadata:
   name: {{ template "am-pattern-1.resource.prefix" . }}-am-analytics-worker-statefulset
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       deployment: {{ template "am-pattern-1.resource.prefix" . }}-am-analytics-worker
@@ -30,24 +30,19 @@ spec:
       labels:
         deployment: {{ template "am-pattern-1.resource.prefix" . }}-am-analytics-worker
     spec:
-      {{ if .Values.wso2.deployment.dependencies.mysql }}
       initContainers:
-        - name: init-mysql-db
-          image: busybox:1.32
-          command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z "wso2am-mysql-db-service" 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL Server has started";']
-        - name: init-mysql-connector-download
+        - name: init-postgresql-connector-download
           image: busybox:1.32
           command:
             - /bin/sh
             - "-c"
             - |
               set -e
-              connector_version=8.0.17
-              wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/${connector_version}/mysql-connector-java-${connector_version}.jar -P /mysql-connector-jar/
+              connector_version=42.2.11
+              wget https://repo1.maven.org/maven2/org/postgresql/postgresql/${connector_version}/postgresql-${connector_version}.jar -P /postgresql-connector-jar/
           volumeMounts:
-            - name: mysql-connector-jar
-              mountPath: /mysql-connector-jar
-      {{ end }}
+            - name: postgresql-connector-jar
+              mountPath: /postgresql-connector-jar
       containers:
         - name: wso2am-analytics-worker
 {{- include "image" (dict "Values" .Values "deployment" .Values.wso2.deployment.analytics.worker) | indent 10 }}
@@ -112,10 +107,8 @@ spec:
             - name: wso2am-analytics-worker-bin
               mountPath: /home/wso2carbon/wso2-config-volume/wso2/worker/bin/carbon.sh
               subPath: carbon.sh
-            {{ if .Values.wso2.deployment.dependencies.mysql }}
-            - name: mysql-connector-jar
+            - name: postgresql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/lib
-            {{ end }}
       serviceAccountName: {{ .Values.kubernetes.serviceAccount }}
       {{- if .Values.wso2.deployment.am.imagePullSecrets }}
       imagePullSecrets:
@@ -131,7 +124,5 @@ spec:
         - name: wso2am-analytics-worker-bin
           configMap:
             name: {{ template "am-pattern-1.resource.prefix" . }}-am-analytics-worker-bin
-        {{ if .Values.wso2.deployment.dependencies.mysql }}
-        - name: mysql-connector-jar
+        - name: postgresql-connector-jar
           emptyDir: {}
-        {{ end }}

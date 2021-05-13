@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+{{ if .Values.wso2.deployment.secondInstance.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -310,3 +310,4 @@ data:
     url = "jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE"
     {{ end }}
   {{ end }}
+{{ end }}

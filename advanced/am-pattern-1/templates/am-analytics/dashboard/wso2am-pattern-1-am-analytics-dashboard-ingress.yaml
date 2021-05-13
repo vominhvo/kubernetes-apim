@@ -25,6 +25,9 @@ spec:
   tls:
     - hosts:
         - {{ .Values.wso2.deployment.analytics.dashboard.ingress.hostname }}
+      {{- if .Values.wso2.deployment.analytics.dashboard.ingress.secretName }}
+      secretName: {{ .Values.wso2.deployment.analytics.dashboard.ingress.secretName }}
+      {{- end }}
   rules:
     - host: {{ .Values.wso2.deployment.analytics.dashboard.ingress.hostname }}
       http:
