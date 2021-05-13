@@ -102,10 +102,8 @@ data:
           properties:
             tcpPort: '9611'
             sslPort: '9711'
-            # tcpReceiverThreadPoolSize: '100'
-            # sslReceiverThreadPoolSize: '100'
-            tcpReceiverThreadPoolSize: '20'
-            sslReceiverThreadPoolSize: '20'
+            tcpReceiverThreadPoolSize: '100'
+            sslReceiverThreadPoolSize: '100'
             hostName: 0.0.0.0
 
       # Configuration of the Data Agents - to publish events through databridge
@@ -256,8 +254,7 @@ data:
             driverClassName: {{ .Values.db.driver }}
             username: {{ .Values.db.username }}
             password: {{ .Values.db.password }}
-            maxPoolSize: 20
-            maxActive: 10
+            maxPoolSize: 2
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -274,8 +271,7 @@ data:
             driverClassName: {{ .Values.db.driver }}
             username: {{ .Values.db.username }}
             password: {{ .Values.db.password }}
-            maxPoolSize: 20
-            maxActive: 10
+            maxPoolSize: 2
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -293,7 +289,7 @@ data:
             username: wso2carbon
             password: wso2carbon
             driverClassName: org.h2.Driver
-            maxPoolSize: 20
+            maxPoolSize: 2
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -311,8 +307,7 @@ data:
             driverClassName: {{ .Values.db.driver }}
             username: {{ .Values.db.username }}
             password: {{ .Values.db.password }}
-            maxPoolSize: 10
-            maxActive: 10
+            maxPoolSize: 2
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -330,8 +325,7 @@ data:
             driverClassName: {{ .Values.db.driver }}
             username: {{ .Values.db.username }}
             password: {{ .Values.db.password }}
-            maxPoolSize: 50
-            maxActive: 10
+            maxPoolSize: 5
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000
@@ -349,8 +343,7 @@ data:
             username: {{ .Values.db.username }}
             password: {{ .Values.db.password }}
             driverClassName: {{ .Values.db.driver }}
-            maxPoolSize: 10
-            maxActive: 10
+            maxPoolSize: 2
             idleTimeout: 60000
             connectionTestQuery: SELECT 1
             validationTimeout: 30000

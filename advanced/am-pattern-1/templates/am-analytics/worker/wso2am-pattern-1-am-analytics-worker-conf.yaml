@@ -156,10 +156,8 @@ data:
           properties:
             tcpPort: '9611'
             sslPort: '9711'
-            # tcpReceiverThreadPoolSize: '100'
-            # sslReceiverThreadPoolSize: '100'
-            tcpReceiverThreadPoolSize: '20'
-            sslReceiverThreadPoolSize: '20'
+            tcpReceiverThreadPoolSize: '100'
+            sslReceiverThreadPoolSize: '100'
             hostName: 0.0.0.0
 
       # Configuration of the Data Agents - to publish events through databridge
@@ -367,7 +365,7 @@ data:
               username: wso2carbon
               password: wso2carbon
               driverClassName: org.h2.Driver
-              maxPoolSize: 30
+              maxPoolSize: 3
               idleTimeout: 60000
               connectionTestQuery: SELECT 1
               validationTimeout: 30000
@@ -385,8 +383,7 @@ data:
               username: {{ .Values.db.username }}
               password: {{ .Values.db.password }}
               driverClassName: {{ .Values.db.driver }}
-              maxPoolSize: 10
-              maxActive: 10
+              maxPoolSize: 2
               idleTimeout: 60000
               connectionTestQuery: SELECT 1
               validationTimeout: 30000
@@ -403,7 +400,7 @@ data:
               username: wso2carbon
               password: wso2carbon
               driverClassName: org.h2.Driver
-              maxPoolSize: 50
+              maxPoolSize: 5
               idleTimeout: 60000
               validationTimeout: 30000
               isAutoCommit: false
@@ -419,8 +416,7 @@ data:
               username: {{ .Values.db.username }}
               password: {{ .Values.db.password }}
               driverClassName: {{ .Values.db.driver }}
-              maxPoolSize: 50
-              maxActive: 10
+              maxPoolSize: 5
               idleTimeout: 60000
               connectionTestQuery: SELECT 1
               validationTimeout: 30000
@@ -437,12 +433,11 @@ data:
               connectionTestQuery: "SELECT 1"
               idleTimeout: 60000
               isAutoCommit: false
-              maxPoolSize: 50
+              maxPoolSize: 5
               jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.prefixName }}wso2_cluster_db{{ .Values.db.optional }}"
               username: {{ .Values.db.username }}
               password: {{ .Values.db.password }}
               driverClassName: {{ .Values.db.driver }}
-              maxActive: 10
               validationTimeout: 30000
 
         -
@@ -460,8 +455,7 @@ data:
               username: {{ .Values.db.username }}
               password: {{ .Values.db.password }}
               driverClassName: {{ .Values.db.driver }}
-              maxActive: 10
-              maxPoolSize: 50
+              maxPoolSize: 5
               validationTimeout: 30000
 
     siddhi:
